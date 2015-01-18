@@ -45,7 +45,8 @@ $l['style_your_nick_max_backgroundimg_desc'] = 'Enter maximal width and height o
 $l['style_your_nick_general'] = 'General';
 $l['style_your_nick_can_style'] = 'Can style username?<br />
 <small><strong>Note:</strong> ticking this option is required for the rest to work.</small>';
-$l['style_your_nick_use_default'] = "Use default group styling if an user doesn't choose their own styling?";
+$l['style_your_nick_use_default'] = "Use default group styling if an user doesn't choose their own styling?
+<small><strong>Note:</strong> unticking it for any group is not recommended on big forums since a slower query will be used.</small>";
 $l['style_your_nick_styling'] = 'Styling';
 $l['style_your_nick_can_color'] = 'Can change the font color?';
 $l['style_your_nick_can_background'] = 'Can change the background color?';
