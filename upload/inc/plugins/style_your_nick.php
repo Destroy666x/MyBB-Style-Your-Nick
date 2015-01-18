@@ -843,10 +843,6 @@ function style_your_nick_validate_color($color, $allow_trans = false)
 	if(preg_match('/^#([a-f0-9]){3}(([a-f0-9]){3})?$/', $color))
 		return $color;
 	
-	// RGB or RGBA
-	if(style_your_nick_validate_rgba($color, $allow_trans))
-		return $color;
-		
 	// Predefined color names
 	if($color == 'transparent' && $allow_trans)
 		return $color;
@@ -870,6 +866,10 @@ function style_your_nick_validate_color($color, $allow_trans = false)
 	);
 		
 	if(in_array($color, $colors))
+		return $color;
+	
+	// RGB or RGBA
+	if(style_your_nick_validate_rgba($color, $allow_trans))
 		return $color;
 		
 	return false;
