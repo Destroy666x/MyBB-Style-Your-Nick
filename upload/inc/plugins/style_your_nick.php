@@ -634,7 +634,7 @@ function style_your_nick_ucp()
 			
 			$trans = '';
 			if($mybb->settings['style_your_nick_transparent'])
-				$trans = $lang->style_your_nick_error_trans;			
+				$trans = $lang->style_your_nick_error_trans;
 			
 			$color = style_your_nick_validate_color($mybb->get_input('color'), $mybb->settings['style_your_nick_transparent']);
 			if(!empty($mybb->input['color']) && !$color)
