@@ -126,7 +126,7 @@ if(isset($users[$username]) && $usergroup != 1)
 	global $mybb;
 	
 	$u = $users[$username];
-	$style = "";
+	$under = $over = $through = $style = "";
 	
 	if($u["color"] && $u["syn_cancolor"] && style_your_nick_validate_color($u["color"], $mybb->settings["style_your_nick_transparent"]))
 		$style .= "color: ".htmlspecialchars_uni($u["color"])."; ";
@@ -162,7 +162,7 @@ if(isset($users[$username]) && $usergroup != 1)
 		$through = " line-through";
 	
 	if($under || $through || $over)
-		$style .= "text-decoration: $under$over$through; ";
+		$style .= "text-decoration:$under$over$through; ";
 	
 	if($u["capitalize"] && $u["syn_cancapitalize"])
 		$style .= "text-transform: capitalize; ";
@@ -176,7 +176,7 @@ if(isset($users[$username]) && $usergroup != 1)
 		$color = $u["shadowcolor"] && style_your_nick_validate_color($u["shadowcolor"], $mybb->settings["style_your_nick_transparent"])
 				? " ".htmlspecialchars_uni($u["shadowcolor"])
 				: "";
-		$style .= "text-shadow: ".htmlspecialchars_uni($u["shadowx"])." ".htmlspecialchars_uni($u["shadowy"])."$length$color; ";
+		$style .= "text-shadow: ".htmlspecialchars_uni($u["shadowx"])." ".htmlspecialchars_uni($u["shadowy"])."$length$color;";
 	}
 	
 	if($style)
@@ -634,40 +634,46 @@ function style_your_nick_ucp()
 			
 			$trans = '';
 			if($mybb->settings['style_your_nick_transparent'])
-				$trans = $lang->style_your_nick_error_trans;
+				$trans = $lang->style_your_nick_error_trans;			
 			
-	
-			if(!empty($mybb->input['color']) && !style_your_nick_validate_color($mybb->get_input('color'), $mybb->settings['style_your_nick_transparent']))
+			$color = style_your_nick_validate_color($mybb->get_input('color'), $mybb->settings['style_your_nick_transparent']);
+			if(!empty($mybb->input['color']) && !$color)
 				$errs[] = $lang->sprintf($lang->style_your_nick_error_color, $trans);
 			
-			if(!empty($mybb->input['background']) && !style_your_nick_validate_color($mybb->get_input('background'), $mybb->settings['style_your_nick_transparent']))
+			$background = style_your_nick_validate_color($mybb->get_input('background'), $mybb->settings['style_your_nick_transparent']);
+			if(!empty($mybb->input['background']) && !$background)
 				$errs[] = $lang->sprintf($lang->style_your_nick_error_background, $trans);
 
-			if(!empty($mybb->input['shadowcolor']) && !style_your_nick_validate_color($mybb->get_input('shadowcolor'), $mybb->settings['style_your_nick_transparent']))
+			$shadowcolor = style_your_nick_validate_color($mybb->get_input('shadowcolor'), $mybb->settings['style_your_nick_transparent']);
+			if(!empty($mybb->input['shadowcolor']) && !$shadowcolor)
 				$errs[] = $lang->sprintf($lang->style_your_nick_error_shadowcolor, $trans);
 			
-			if(!empty($mybb->input['size']) && !style_your_nick_validate_size($mybb->get_input('size'), $mybb->settings['style_your_nick_max_font'], $mybb->settings['style_your_nick_min_font']))
-				$errs[] = $lang->sprintf($lang->style_your_nick_error_size,
-					($mybb->settings['style_your_nick_max_font'] ? $lang->sprintf($lang->style_your_nick_error_max_px, $mybb->settings['style_your_nick_max_font']) : ''),
-					($mybb->settings['style_your_nick_min_font'] ? $lang->sprintf($lang->style_your_nick_error_min_px, $mybb->settings['style_your_nick_min_font']) : ''));
-			
-			if(!empty($mybb->input['shadowx']) && empty($mybb->input['shadowy']) || $mybb->input['shadowy'] && empty($mybb->input['shadowx']))
+			if(!empty($mybb->input['shadowx']) && empty($mybb->input['shadowy']) || !empty($mybb->input['shadowy']) && empty($mybb->input['shadowx']))
 				$errs[] = $lang->style_your_nick_error_shadowxy;
 			
-			if(!empty($mybb->input['shadowx']) && !style_your_nick_validate_size($mybb->get_input('shadowx'), $mybb->settings['style_your_nick_max_shadowx'], $mybb->settings['style_your_nick_min_shadowx']))
+			$shadowx = style_your_nick_validate_size($mybb->get_input('shadowx'), $mybb->settings['style_your_nick_max_shadowx'], $mybb->settings['style_your_nick_min_shadowx']);
+			if(!empty($mybb->input['shadowx']) && !$shadowx)
 				$errs[] = $lang->sprintf($lang->style_your_nick_error_shadowx,
 					($mybb->settings['style_your_nick_max_shadowx'] ? $lang->sprintf($lang->style_your_nick_error_max_px, $mybb->settings['style_your_nick_max_shadowx']) : ''),
 					($mybb->settings['style_your_nick_min_shadowx'] ? $lang->sprintf($lang->style_your_nick_error_min_px, $mybb->settings['style_your_nick_min_shadowx']) : ''));
 
-			if(!empty($mybb->input['shadowy']) && !style_your_nick_validate_size($mybb->get_input('shadowy'), $mybb->settings['style_your_nick_max_shadowy'], $mybb->settings['style_your_nick_min_shadowy']))
+			$shadowy = style_your_nick_validate_size($mybb->get_input('shadowy'), $mybb->settings['style_your_nick_max_shadowy'], $mybb->settings['style_your_nick_min_shadowy']);
+			if(!empty($mybb->input['shadowy']) && !$shadowy)
 				$errs[] = $lang->sprintf($lang->style_your_nick_error_shadowy,
 					($mybb->settings['style_your_nick_max_shadowy'] ? $lang->sprintf($lang->style_your_nick_error_max_px, $mybb->settings['style_your_nick_max_shadowy']) : ''),
 					($mybb->settings['style_your_nick_min_shadowy'] ? $lang->sprintf($lang->style_your_nick_error_min_px, $mybb->settings['style_your_nick_min_shadowy']) : ''));
 			
-			if(!empty($mybb->input['shadowlength']) && !style_your_nick_validate_size($mybb->get_input('shadowlength'), $mybb->settings['style_your_nick_max_shadowlength'], $mybb->settings['style_your_nick_min_shadowlength']))
+			$shadowlength = style_your_nick_validate_size($mybb->get_input('shadowlength'), $mybb->settings['style_your_nick_max_shadowlength'], $mybb->settings['style_your_nick_min_shadowlength']);
+			if(!empty($mybb->input['shadowlength']) && !$shadowlength)
 				$errs[] = $lang->sprintf($lang->style_your_nick_error_shadowlength,
 					($mybb->settings['style_your_nick_max_shadowlength'] ? $lang->sprintf($lang->style_your_nick_error_max_px, $mybb->settings['style_your_nick_max_shadowlength']) : ''),
 					($mybb->settings['style_your_nick_min_shadowlength'] ? $lang->sprintf($lang->style_your_nick_error_min_px, $mybb->settings['style_your_nick_min_shadowlength']) : ''));
+					
+			$size = style_your_nick_validate_size($mybb->get_input('size'), $mybb->settings['style_your_nick_max_font'], $mybb->settings['style_your_nick_min_font']);
+			if(!empty($mybb->input['size']) && !$size)
+				$errs[] = $lang->sprintf($lang->style_your_nick_error_size,
+					($mybb->settings['style_your_nick_max_font'] ? $lang->sprintf($lang->style_your_nick_error_max_px, $mybb->settings['style_your_nick_max_font']) : ''),
+					($mybb->settings['style_your_nick_min_font'] ? $lang->sprintf($lang->style_your_nick_error_min_px, $mybb->settings['style_your_nick_min_font']) : ''));
 			
 			if(!empty($mybb->input['backgroundimg']))
 			{
@@ -690,21 +696,21 @@ function style_your_nick_ucp()
 			if(empty($errs))
 			{
 				$vals = array(
-					'color' => $db->escape_string($mybb->get_input('color')),
-					'background' => $db->escape_string($mybb->get_input('background')),
+					'color' => $db->escape_string($color),
+					'background' => $db->escape_string($background),
 					'backgroundimg' => $db->escape_string($mybb->get_input('backgroundimg')),
 					'backgroundrepeat' => $mybb->get_input('backgroundrepeat', MyBB::INPUT_INT),
-					'size' => $db->escape_string($mybb->get_input('size')),
+					'size' => $db->escape_string($size),
 					'bold' => $mybb->get_input('bold', MyBB::INPUT_INT),
 					'italic' => $mybb->get_input('italic', MyBB::INPUT_INT),
 					'underline' => $mybb->get_input('underline', MyBB::INPUT_INT),
 					'overline' => $mybb->get_input('overline', MyBB::INPUT_INT),
 					'strike' => $mybb->get_input('strike', MyBB::INPUT_INT),
 					'capital' => $mybb->get_input('capital', MyBB::INPUT_INT),
-					'shadowx' => $db->escape_string($mybb->get_input('shadowx')),
-					'shadowy' => $db->escape_string($mybb->get_input('shadowy')),
-					'shadowlength' => $db->escape_string($mybb->get_input('shadowlength')),
-					'shadowcolor' => $db->escape_string($mybb->get_input('shadowcolor'))				
+					'shadowx' => $db->escape_string($shadowx),
+					'shadowy' => $db->escape_string($shadowy),
+					'shadowlength' => $db->escape_string($shadowlength),
+					'shadowcolor' => $db->escape_string($shadowcolor)				
 				);
 				
 				$synid = $db->fetch_field($db->simple_select('styleyournick', 'synid', 'uid = '.$mybb->user['uid']), 'synid');

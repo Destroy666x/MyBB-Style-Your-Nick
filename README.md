@@ -24,6 +24,7 @@ Released under GNU GPL v3, 29 June 2007. Read the LICENSE.md file for more infor
 **Changelog**:
 --------------
 
+**1.1** - small bugfixes
 **1.0** - initial release  
 
 **Plans for the future**:
