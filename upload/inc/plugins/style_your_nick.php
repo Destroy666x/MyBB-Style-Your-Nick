@@ -68,7 +68,7 @@ function style_your_nick_info()
 
 function style_your_nick_activate()
 {
-	global $db, $lang;
+	global $lang;
 	
 	$lang->load('style_your_nick_acp');
 	
@@ -204,7 +204,7 @@ if(isset($users[$username]) && $usergroup != 1)
 		); 
 		
 		$db->insert_query('settinggroups', $style_your_nick_settinggroup);
-		$gid = (int)$db->insert_id();
+		$gid = $db->insert_id();
 		
 		$d = -1;
 		
