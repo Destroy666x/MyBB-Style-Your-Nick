@@ -3,11 +3,11 @@
 /*
 Name: Style Your Nick
 Author: Destroy666
-Version: 1.0
+Version: 1.1
 Requirements: Plugin Library, PostgreSQL 9.1
 Info: Plugin for MyBB forum software, coded for versions 1.8.x (may also work in 1.6.x/1.4.x after some changes).
 It allows users to change their nickname styling in the User CP (based on group permissions).
-1 core edit, 1 new database table, 14 new database columns, 8 new templates, 1 template edit, 10 new settings
+1 core edit, 1 new database table, 14 new database columns, 8 new templates, 1 template edit, 11 new settings
 Released under GNU GPL v3, 29 June 2007. Read the LICENSE.md file for more information.
 Support: official MyBB forum - http://community.mybb.com/mods.php?action=profile&uid=58253 (don't PM me, post on forums)
 Bug reports: my github - https://github.com/Destroy666x
@@ -21,8 +21,10 @@ $l['pluginlibrary_missing'] = '<strong>Note:</strong> Plugin Library is needed t
 $l['core_changes_error'] = "The required core file changes couldn't be completed.";
 
 $l['style_your_nick_settings'] = 'Settings for the Style Your Nick plugin.';
-$l['style_your_nick_transparent'] = 'Allow transparent colors?';
+$l['style_your_nick_transparent'] = 'Allow Transparent Colors?';
 $l['style_your_nick_transparent_desc'] = 'Set to Yes to enable the predefined transparent and RGBA colors.';
+$l['style_your_nick_disallowed_colors'] = 'Disallowed Colors';
+$l['style_your_nick_disallowed_colors_desc'] = 'Enter names/codes of colors which should be disallowed, each in separate line, without spaces.';
 $l['style_your_nick_max_font'] = 'Maximal Font Size';
 $l['style_your_nick_max_font_desc'] = 'Enter a number representing the maximal font size (in pixels).';
 $l['style_your_nick_min_font'] = 'Minimal Font Size';

@@ -3,11 +3,11 @@
 /*
 Nazwa: Stylizuj nazwę użytkownika
 Autor: Destroy666
-Wersja: 1.0
+Wersja: 1.1
 Wymagania: Plugin Library, PostgreSQL 9.1
 Informacje: Plugin dla skryptu MyBB, zakodowany dla wersji 1.8.x (może także działać w 1.6.x/1.4.x).
 Pozwala zmieniać styl nazwy użytkownika w panelu (bazując na uprawnieniach grupy).
-1 edycja pliku źródłowego, 1 nowa tabela bazy danych, 14 nowych kolumn bazy danych, 8 nowych szablonów, 1 zmiana w szablonie, 10 nowych ustawień
+1 edycja pliku źródłowego, 1 nowa tabela bazy danych, 14 nowych kolumn bazy danych, 8 nowych szablonów, 1 zmiana w szablonie, 11 nowych ustawień
 Licencja: GNU GPL v3, 29 June 2007. Więcej informacji w pliku LICENSE.md.
 Support: officjalne forum MyBB - http://community.mybb.com/mods.php?action=profile&uid=58253 (nie odpowiadam na PM, tylko na posty)
 Zgłaszanie błędów: mój github - https://github.com/Destroy666x
@@ -50,11 +50,12 @@ Podaj prawidłowy kolor CSS. Wspierane formaty: ustalone nazwy (red, green, itd.
 $l['style_your_nick_error_disallowed'] = 'Próbujesz zmienić opcję, która jest niedostępna dla Twojej grupy.';
 $l['style_your_nick_error_not_filled'] = 'Nie wypełniłeś żadnego pola. Przynajmniej jedno musi zostać zmienione.';
 $l['style_your_nick_error_trans'] = ' Przezroczyste kolory takie jak RGBA są niedozwolone.';
+$l['style_your_nick_error_disallowed_colors'] = ' Następujące kolory nie mogą być użyte: {1}';
 $l['style_your_nick_error_max_px'] = ' Maksimum: {1}px.';
 $l['style_your_nick_error_min_px'] = ' Minimum: {1}px.';
-$l['style_your_nick_error_color'] = 'Nieprawidłowy kolor czcionki. Upewnij się, że wpisujesz poprawny format.{1}';
-$l['style_your_nick_error_background'] = 'Nieprawidłowy kolor tła. Upewnij się, że wpisujesz poprawny format.{1}';
-$l['style_your_nick_error_shadowcolor'] = 'Nieprawidłowy kolor cienia. Upewnij się, że wpisujesz poprawny format.{1}';
+$l['style_your_nick_error_color'] = 'Nieprawidłowy kolor czcionki. Upewnij się, że wpisujesz poprawny format.{1}{2}';
+$l['style_your_nick_error_background'] = 'Nieprawidłowy kolor tła. Upewnij się, że wpisujesz poprawny format.{1}{2}';
+$l['style_your_nick_error_shadowcolor'] = 'Nieprawidłowy kolor cienia. Upewnij się, że wpisujesz poprawny format.{1}{2}';
 $l['style_your_nick_error_shadowxy'] = 'Oba X i Y cienia muszą zostać podane.';
 $l['style_your_nick_error_size'] = 'Nieprawidłowy rozmiar czcionki. Upewnij się, że wpisujesz poprawny format.{1}{2}';
 $l['style_your_nick_error_shadowx'] = 'Nieprawidłowa pozycja X cienia. Upewnij się, że wpisujesz poprawny format.{1}{2}';

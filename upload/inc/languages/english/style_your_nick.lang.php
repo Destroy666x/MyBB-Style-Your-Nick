@@ -3,11 +3,11 @@
 /*
 Name: Style Your Nick
 Author: Destroy666
-Version: 1.0
+Version: 1.1
 Requirements: Plugin Library, PostgreSQL 9.1
 Info: Plugin for MyBB forum software, coded for versions 1.8.x (may also work in 1.6.x/1.4.x after some changes).
 It allows users to change their nickname styling in the User CP (based on group permissions).
-1 core edit, 1 new database table, 14 new database columns, 8 new templates, 1 template edit, 10 new settings
+1 core edit, 1 new database table, 14 new database columns, 8 new templates, 1 template edit, 11 new settings
 Released under GNU GPL v3, 29 June 2007. Read the LICENSE.md file for more information.
 Support: official MyBB forum - http://community.mybb.com/mods.php?action=profile&uid=58253 (don't PM me, post on forums)
 Bug reports: my github - https://github.com/Destroy666x
@@ -50,11 +50,12 @@ Enter a valid CSS color or leave blank to use the font color. Supported formats:
 $l['style_your_nick_error_disallowed'] = "You're trying to set a field which your usergroup is not allowed to edit.";
 $l['style_your_nick_error_not_filled'] = "You haven't filled any fields. At least one field should be modified.";
 $l['style_your_nick_error_trans'] = ' Transparent colors including RGBA are disallowed.';
+$l['style_your_nick_error_disallowed_colors'] = " The following colors can't be used: {1}";
 $l['style_your_nick_error_max_px'] = ' Maximum: {1}px.';
 $l['style_your_nick_error_min_px'] = ' Minimum: {1}px.';
-$l['style_your_nick_error_color'] = "The font color you entered is invalid. Make sure you're using a correct format.{1}";
-$l['style_your_nick_error_background'] = "The background color you entered is invalid. Make sure you're using a correct format.{1}";
-$l['style_your_nick_error_shadowcolor'] = "The shadow color you entered is invalid. Make sure you're using a correct format.{1}";
+$l['style_your_nick_error_color'] = "The font color you entered is invalid. Make sure you're using a correct format.{1}{2}";
+$l['style_your_nick_error_background'] = "The background color you entered is invalid. Make sure you're using a correct format.{1}{2}";
+$l['style_your_nick_error_shadowcolor'] = "The shadow color you entered is invalid. Make sure you're using a correct format.{1}{2}";
 $l['style_your_nick_error_shadowxy'] = 'Both shadow X and Y positions have to be entered.';
 $l['style_your_nick_error_size'] = "The font size you entered is invalid. Make sure you're using a correct format.{1}{2}";
 $l['style_your_nick_error_shadowx'] = "The shadow X position you entered is invalid. Make sure you're using a correct format.{1}{2}";

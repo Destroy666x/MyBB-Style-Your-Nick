@@ -3,11 +3,11 @@
 /*
 Nazwa: Stylizuj nazwę użytkownika
 Autor: Destroy666
-Wersja: 1.0
+Wersja: 1.1
 Wymagania: Plugin Library, PostgreSQL 9.1
 Informacje: Plugin dla skryptu MyBB, zakodowany dla wersji 1.8.x (może także działać w 1.6.x/1.4.x).
 Pozwala zmieniać styl nazwy użytkownika w panelu (bazując na uprawnieniach grupy).
-1 edycja pliku źródłowego, 1 nowa tabela bazy danych, 14 nowych kolumn bazy danych, 8 nowych szablonów, 1 zmiana w szablonie, 10 nowych ustawień
+1 edycja pliku źródłowego, 1 nowa tabela bazy danych, 14 nowych kolumn bazy danych, 8 nowych szablonów, 1 zmiana w szablonie, 11 nowych ustawień
 Licencja: GNU GPL v3, 29 June 2007. Więcej informacji w pliku LICENSE.md.
 Support: officjalne forum MyBB - http://community.mybb.com/mods.php?action=profile&uid=58253 (nie odpowiadam na PM, tylko na posty)
 Zgłaszanie błędów: mój github - https://github.com/Destroy666x
@@ -23,6 +23,8 @@ $l['core_changes_error'] = 'Wymagana zmiana w pliku źródłowym nie mogła zost
 $l['style_your_nick_settings'] = 'Ustawienia dla pluginu "Animowane dodatkowe grupy".';
 $l['style_your_nick_transparent'] = 'Zezwól na przezroczyste kolory?';
 $l['style_your_nick_transparent_desc'] = 'Ustaw na tak aby użytkownicy mogli korzystać z przezroczystych kolorów (transparent i RGBA).';
+$l['style_your_nick_disallowed_colors'] = 'Zabronione kolory';
+$l['style_your_nick_disallowed_colors_desc'] = 'Podaj nazwy/kody kolorów, które nie mogą być użyte, każdy w nowej linii, bez spacji.';
 $l['style_your_nick_max_font'] = 'Maksymalny rozmiar czcionki';
 $l['style_your_nick_max_font_desc'] = 'Podaj liczbę reprezentującą maksymalny rozmiar czcionki (w pikselach).';
 $l['style_your_nick_min_font'] = 'Minimalny rozmiar czcionki';

@@ -3,11 +3,11 @@
 /*
 Name: Style Your Nick
 Author: Destroy666
-Version: 1.0
+Version: 1.1
 Requirements: Plugin Library, PostgreSQL 9.1
 Info: Plugin for MyBB forum software, coded for versions 1.8.x (may also work in 1.6.x/1.4.x after some changes).
 It allows users to change their nickname styling in the User CP (based on group permissions).
-1 core edit, 1 new database table, 14 new database columns, 8 new templates, 1 template edit, 10 new settings
+1 core edit, 1 new database table, 14 new database columns, 8 new templates, 1 template edit, 11 new settings
 Released under GNU GPL v3, 29 June 2007. Read the LICENSE.md file for more information.
 Support: official MyBB forum - http://community.mybb.com/mods.php?action=profile&uid=58253 (don't PM me, post on forums)
 Bug reports: my github - https://github.com/Destroy666x
@@ -28,7 +28,7 @@ if(!defined('PLUGINLIBRARY'))
 
 function style_your_nick_info()
 {
-    global $db, $lang;
+    global $db, $lang, $mybb;
 	
 	$lang->load('style_your_nick_acp');
 	
@@ -45,6 +45,10 @@ function style_your_nick_info()
 		$style_your_nick_cfg = '<a href="index.php?module=config&amp;action=change&amp;gid='.$gid.'">'.$lang->configuration.'</a>
 <br />
 <br />';
+
+	$upgradelinks = array();
+	if(!isset($mybb->settings['$lang->style_your_nick_disallowed_colors']))
+		$upgradelinks[] = 'Upgrade to 1.1';
 	
 	return array(
 		'name'			=> $lang->style_your_nick,
@@ -214,6 +218,17 @@ if(isset($users[$username]) && $usergroup != 1)
 			'description'	=> $db->escape_string($lang->style_your_nick_transparent_desc),
 			'optionscode'	=> 'yesno',
 			'value'			=> 0
+		);
+		
+		$style_your_nick_settings[] = array(
+			'name'			=> 'style_your_nick_disallowed_colors',
+			'title'			=> $db->escape_string($lang->style_your_nick_disallowed_colors),
+			'description'	=> $db->escape_string($lang->style_your_nick_disallowed_colors_desc),
+			'optionscode'	=> 'textarea',
+			'value'			=> 'white
+#FFF
+#FFFFFF
+rgb(255,255,255)'
 		);
 		
 		$style_your_nick_settings[] = array(
@@ -635,18 +650,22 @@ function style_your_nick_ucp()
 			$trans = '';
 			if($mybb->settings['style_your_nick_transparent'])
 				$trans = $lang->style_your_nick_error_trans;
+				
+			$disallowed = '';
+			if($mybb->settings['style_your_nick_disallowed_colors'])
+				$disallowed = $lang->sprintf($lang->style_your_nick_error_disallowed_colors, implode($lang->comma, preg_split('/[\n\r]+/', $mybb->settings['style_your_nick_disallowed_colors'])));
 			
 			$color = style_your_nick_validate_color($mybb->get_input('color'), $mybb->settings['style_your_nick_transparent']);
 			if(!empty($mybb->input['color']) && !$color)
-				$errs[] = $lang->sprintf($lang->style_your_nick_error_color, $trans);
+				$errs[] = $lang->sprintf($lang->style_your_nick_error_color, $trans, $disallowed);
 			
 			$background = style_your_nick_validate_color($mybb->get_input('background'), $mybb->settings['style_your_nick_transparent']);
 			if(!empty($mybb->input['background']) && !$background)
-				$errs[] = $lang->sprintf($lang->style_your_nick_error_background, $trans);
+				$errs[] = $lang->sprintf($lang->style_your_nick_error_background, $trans, $disallowed);
 
 			$shadowcolor = style_your_nick_validate_color($mybb->get_input('shadowcolor'), $mybb->settings['style_your_nick_transparent']);
 			if(!empty($mybb->input['shadowcolor']) && !$shadowcolor)
-				$errs[] = $lang->sprintf($lang->style_your_nick_error_shadowcolor, $trans);
+				$errs[] = $lang->sprintf($lang->style_your_nick_error_shadowcolor, $trans, $disallowed);
 			
 			if(!empty($mybb->input['shadowx']) && empty($mybb->input['shadowy']) || !empty($mybb->input['shadowy']) && empty($mybb->input['shadowx']))
 				$errs[] = $lang->style_your_nick_error_shadowxy;
@@ -751,12 +770,7 @@ function style_your_nick_ucp()
 				$fd = substr($key, 7);
 				
 				if($fd == 'shadow')
-				{
-					$perms['shadowx'] = ''; 
-					$perms['shadowy'] = ''; 
-					$perms['shadowlength'] = ''; 
-					$perms['shadowcolor'] = '';
-				}
+					$perms['shadowx'] = $perms['shadowy'] = $perms['shadowlength'] = $perms['shadowcolor'] = '';
 				else
 					$perms[$fd] = '';
 			}
@@ -829,6 +843,34 @@ function style_your_nick_ucp_menu()
 		$nav_style_your_nick = '';
 }
 
+// Delete unused (lack of permissions) records from styleyournick table
+
+$plugins->add_hook('task_usercleanup', 'style_your_nick_clean_unused');
+function style_your_nick_clean_unused($task)
+{
+	global $db;
+	
+	$todelete = array();
+	
+	$q = $db->query("SELECT u.uid, u.usergroup, u.additionalgroups
+			FROM {$db->table_prefix}styleyournick s
+			LEFT JOIN {$db->table_prefix}users u ON(u.uid = s.uid)
+		");
+		
+	while($u = $db->fetch_array($q))
+	{
+		if($u['additionalgroups'])
+			$u['usergroup'] .= ','.$u['additionalgroups'];
+		
+		$perms = usergroup_permissions($u['usergroup']);
+		
+		if(!$perms['syn_style'])
+			$todelete[] = $u['uid'];
+	}
+	
+	$db->delete_query('styleyournick', 'uid IN('.implode(',', $todelete).')');
+}
+
 /*
 Check if the provided string is a valid CSS color.
 	
@@ -842,7 +884,7 @@ function style_your_nick_validate_color($color, $allow_trans = false)
 	
 	$color = strtolower(preg_replace('/\s+/', '', $color));
 	
-	if(!$color || strlen($color) > 30)
+	if(!$color || strlen($color) > 30 || in_array($color, preg_split('/[\n\r]+/', $mybb->settings['style_your_nick_disallowed_colors'])))
 		return false;
 	
 	// HEX 3 or 6 chars
@@ -931,7 +973,7 @@ Check if the provided size is valid.
 @param integer - Min size (in pixels).
 @return mixed - The lowercased size if it's valid, false if not.
 */
-function style_your_nick_validate_size($size, $maxsize = 50, $minsize = 0)
+function style_your_nick_validate_size($size, $maxsize = 50, $minsize = 1)
 {
 	$size = strtolower(preg_replace('/\s+/', '', $size));
 	
