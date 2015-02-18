@@ -10,7 +10,7 @@
 **Info**:
 ---------
 
-Plugin for MyBB forum software, coded for versions 1.8.x (will probably also work in 1.6.x/1.4.x).  
+Plugin for MyBB forum software, coded for versions 1.8.x (will probably also work in 1.6.x/1.4.x - not without hook changes anymore).  
 It allows users to change their nickname styling in the User CP (based on group permissions).  
 1 core edit, 1 new database table, 14 new database columns, 8 new templates, 1 template edit, 11 new settings  
 Released under GNU GPL v3, 29 June 2007. Read the LICENSE.md file for more information.  
@@ -24,7 +24,7 @@ Released under GNU GPL v3, 29 June 2007. Read the LICENSE.md file for more infor
 **Changelog**:
 --------------
 
-**1.1** - small bugfixes, added disallowed colors setting, modified User Cleanup task to delete unused (lack of permissions) records from the `styleyournick` table. Upgrade **required** (more info below).  
+**1.1** - small bugfixes, added disallowed colors setting, modified User Cleanup task to delete unused (lack of permissions) records from the `styleyournick` table, they're also removed on user's content deletion or profile clearance. Upgrade **required** (more info below).  
 **1.0** - initial release  
 
 **Plans for the future**:

@@ -5,7 +5,7 @@ Name: Style Your Nick
 Author: Destroy666
 Version: 1.1
 Requirements: Plugin Library, PostgreSQL 9.1
-Info: Plugin for MyBB forum software, coded for versions 1.8.x (may also work in 1.6.x/1.4.x after some changes).
+Info: Plugin for MyBB forum software, coded for versions 1.8.x (may also work in 1.6.x/1.4.x after some changes - not without hook changes anymore).
 It allows users to change their nickname styling in the User CP (based on group permissions).
 1 core edit, 1 new database table, 14 new database columns, 8 new templates, 1 template edit, 11 new settings
 Released under GNU GPL v3, 29 June 2007. Read the LICENSE.md file for more information.

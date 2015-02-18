@@ -5,7 +5,7 @@ Name: Style Your Nick
 Author: Destroy666
 Version: 1.1
 Requirements: Plugin Library, PostgreSQL 9.1
-Info: Plugin for MyBB forum software, coded for versions 1.8.x (may also work in 1.6.x/1.4.x after some changes).
+Info: Plugin for MyBB forum software, coded for versions 1.8.x (may also work in 1.6.x/1.4.x after some changes - not without hook changes anymore).
 It allows users to change their nickname styling in the User CP (based on group permissions).
 1 core edit, 1 new database table, 14 new database columns, 8 new templates, 1 template edit, 11 new settings
 Released under GNU GPL v3, 29 June 2007. Read the LICENSE.md file for more information.
@@ -846,6 +846,7 @@ function style_your_nick_ucp_menu()
 // Delete unused (lack of permissions) records from styleyournick table
 
 $plugins->add_hook('task_usercleanup', 'style_your_nick_clean_unused');
+
 function style_your_nick_clean_unused($task)
 {
 	global $db;
@@ -869,6 +870,15 @@ function style_your_nick_clean_unused($task)
 	}
 	
 	$db->delete_query('styleyournick', 'uid IN('.implode(',', $todelete).')');
+}
+
+// Also remove them on content deletion or when the profile is cleared
+$plugins->add_hook('datahandler_user_delete_content', 'style_your_nick_clean_unused_userhandler');
+$plugins->add_hook('datahandler_user_clear_profile', 'style_your_nick_clean_unused_userhandler');
+
+function style_your_nick_clean_unused_userhandler($del)
+{
+	$GLOBALS['db']->delete_query('styleyournick', "uid IN({$del->delete_uids})");
 }
 
 /*
