@@ -103,12 +103,12 @@ if(!is_array($users))
 	
 	// If there are no usergroups with removed default styling, use a simplier query
 	if(empty($usedefgids))
-		$q = $db->query("SELECT u.username, u.usergroup, u.additionalgroups, s.*
+		$q = $db->write_query("SELECT u.username, u.usergroup, u.additionalgroups, s.*
 			FROM {$db->table_prefix}styleyournick s
 			LEFT JOIN {$db->table_prefix}users u ON(u.uid = s.uid)
 		");
 	else
-		$q = $db->query("SELECT u.username, u.usergroup, u.additionalgroups, s.*
+		$q = $db->write_query("SELECT u.username, u.usergroup, u.additionalgroups, s.*
 			FROM {$db->table_prefix}users u
 			LEFT JOIN {$db->table_prefix}styleyournick s ON(s.uid = u.uid)
 		");	
@@ -853,7 +853,7 @@ function style_your_nick_clean_unused($task)
 	
 	$todelete = array();
 	
-	$q = $db->query("SELECT u.uid, u.usergroup, u.additionalgroups
+	$q = $db->write_query("SELECT u.uid, u.usergroup, u.additionalgroups
 			FROM {$db->table_prefix}styleyournick s
 			LEFT JOIN {$db->table_prefix}users u ON(u.uid = s.uid)
 		");
