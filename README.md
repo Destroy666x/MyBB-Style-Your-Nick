@@ -30,9 +30,9 @@ Released under GNU GPL v3, 29 June 2007. Read the LICENSE.md file for more infor
 **Plans for the future**:
 ------------------------
 
-- [ ] add a jQuery colorpicker to the styling page
-- [x] clean up old unused stylings - introduced in 1.1
-- [ ] allow users to save multiple styles and then choose whichever they want (with usergroup maximum styles per user option)
+- [ ] add a jQuery colorpicker to the styling page - 1.1
+- [x] clean up old unused stylings - 1.1
+- [ ] allow users to save multiple styles and then choose whichever they want (with usergroup maximum styles per user option) - 1.1
 - [ ] move the limits size/color/image limits to usergroup options
 - [ ] predefined ACP stylings made by admins which the user can choose
 - [ ] add any other possible effects (image before/after nick, rainbow JS, etc.) - very low priority, probably will add them only after donations
