@@ -24,7 +24,7 @@ Released under GNU GPL v3, 29 June 2007. Read the LICENSE.md file for more infor
 **Changelog**:
 --------------
 
-**1.1** - small bugfixes, added disallowed colors setting, modified User Cleanup task to delete unused (lack of permissions) records from the `styleyournick` table, they're also removed on user's content deletion or profile clearance. Upgrade **required** (more info below).  
+**1.1** - small bugfixes (no default `background-repeat` and missing core edit error - thanks to rockenre for reports), added disallowed colors setting, modified User Cleanup task to delete unused (lack of permissions) records from the `styleyournick` table, they're also removed on user's content deletion or profile clearance. Upgrade **required** (more info below).  
 **1.0** - initial release  
 
 **Plans for the future**:
