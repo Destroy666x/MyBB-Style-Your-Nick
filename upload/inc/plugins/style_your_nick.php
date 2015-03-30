@@ -141,10 +141,12 @@ if(isset($users[$username]) && $usergroup != 1)
 	// No size checks unfortunately since they are way too slow or unreliable... Unless I would upload all images to server, which may happen in the future.
 	if($u["backgroundimg"] && $u["syn_canbackgroundimg"])
 	{
-		$style .= "background-image: url(".htmlspecialchars_uni($u["backgroundimg"])."); ";
+		$style .= "background-image: url(".htmlspecialchars_uni($u["backgroundimg"])."); background-repeat: ";
 		
 		if($u["backgroundrepeat"] && $u["syn_canbackgroundrepeat"])
-			$style .= "background-repeat: repeat; ";
+			$style .= "repeat; ";
+		else
+			$style .= "no-repeat; "
 	}
 	
 	if($u["size"] && $u["syn_cansize"] && style_your_nick_validate_size($u["size"], $mybb->settings["style_your_nick_max_font"], $mybb->settings["style_your_nick_min_font"]))
@@ -188,7 +190,10 @@ if(isset($users[$username]) && $usergroup != 1)
 	elseif(!$u["syn_usedefault"])
 		$format = "{username}";
 }'), true) !== true)
+	{
 		flash_message($lang->core_changes_error, 'error');
+		admin_redirect('index.php?module=config-plugins');
+	}
 	
 	// Modify templates
 	require_once MYBB_ROOT.'/inc/adminfunctions_templates.php';
@@ -332,7 +337,10 @@ function style_your_nick_deactivate()
 	$PL or require_once PLUGINLIBRARY;
 	
 	if(!$PL->edit_core('style_your_nick', 'inc/functions.php', array(), true) !== true)
+	{
 		flash_message($lang->core_changes_error, 'error');
+		admin_redirect('index.php?module=config-plugins');
+	}
 	
 	require_once MYBB_ROOT.'/inc/adminfunctions_templates.php';
 	find_replace_templatesets('usercp_nav_profile', '#\s*'.preg_quote("{\$GLOBALS['nav_style_your_nick']}").'#i', '');
@@ -869,7 +877,8 @@ function style_your_nick_clean_unused($task)
 			$todelete[] = $u['uid'];
 	}
 	
-	$db->delete_query('styleyournick', 'uid IN('.implode(',', $todelete).')');
+	if($todelete)
+		$db->delete_query('styleyournick', 'uid IN('.implode(',', $todelete).')');
 }
 
 // Also remove them on content deletion or when the profile is cleared

@@ -18,7 +18,7 @@ Zgłaszanie błędów: mój github - https://github.com/Destroy666x
 $l['style_your_nick'] = 'Stylizuj nazwę użytkownika';
 $l['style_your_nick_info'] = 'Pozwala zmieniać styl nazwy użytkownika w panelu (bazując na uprawnieniach grupy).';
 $l['pluginlibrary_missing'] = '<strong>Uwaga:</strong> Modyfikacja wymaga biblioteki Plugin Library do dodawania/usuwania szablonów. Można ją pobrać <a href="https://github.com/frostschutz/MyBB-PluginLibrary/archive/master.zip">tutaj</a>.';
-$l['core_changes_error'] = 'Wymagana zmiana w pliku źródłowym nie mogła zostać przeprowadzona.';
+$l['core_changes_error'] = 'Wymagana zmiana w pliku źródłowym nie mogła zostać przeprowadzona. Upewnij się, że plik inc/functions.php jest dostępny i zapisywalny w trakcie procesu.';
 
 $l['style_your_nick_settings'] = 'Ustawienia dla pluginu "Animowane dodatkowe grupy".';
 $l['style_your_nick_transparent'] = 'Zezwól na przezroczyste kolory?';

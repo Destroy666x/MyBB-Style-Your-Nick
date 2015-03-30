@@ -18,7 +18,7 @@ Bug reports: my github - https://github.com/Destroy666x
 $l['style_your_nick'] = 'Style Your Nick';
 $l['style_your_nick_info'] = 'Allows users in chosen usergroups to change their nickname style.';
 $l['pluginlibrary_missing'] = '<strong>Note:</strong> Plugin Library is needed to create/delete new templates and edit core files in this plugin. You can download it from <a href="https://github.com/frostschutz/MyBB-PluginLibrary/archive/master.zip">here</a>.';
-$l['core_changes_error'] = "The required core file changes couldn't be completed.";
+$l['core_changes_error'] = "The required core file changes couldn't be completed. Make sure that inc/functions.php file is available and writable during the process.";
 
 $l['style_your_nick_settings'] = 'Settings for the Style Your Nick plugin.';
 $l['style_your_nick_transparent'] = 'Allow Transparent Colors?';
