@@ -47,7 +47,7 @@ function style_your_nick_info()
 <br />';
 
 	$upgradelinks = array();
-	if(!isset($mybb->settings['$lang->style_your_nick_disallowed_colors']))
+	if($gid && !isset($mybb->settings['$lang->style_your_nick_disallowed_colors']))
 		$upgradelinks[] = 'Upgrade to 1.1';
 	
 	return array(
@@ -116,7 +116,7 @@ if(!is_array($users))
 	while($u = $db->fetch_array($q))
 	{
 		if($u["additionalgroups"])
-			$u["usergroup"] .= ",".$u["additionalgroups"];
+			$u["usergroup"] .= ",{$u["additionalgroups"]}";
 		
 		$perms = usergroup_permissions($u["usergroup"]);
 		
@@ -869,7 +869,7 @@ function style_your_nick_clean_unused($task)
 	while($u = $db->fetch_array($q))
 	{
 		if($u['additionalgroups'])
-			$u['usergroup'] .= ','.$u['additionalgroups'];
+			$u['usergroup'] .= ",{$u["additionalgroups"]}";
 		
 		$perms = usergroup_permissions($u['usergroup']);
 		
@@ -887,7 +887,8 @@ $plugins->add_hook('datahandler_user_clear_profile', 'style_your_nick_clean_unus
 
 function style_your_nick_clean_unused_userhandler($del)
 {
-	$GLOBALS['db']->delete_query('styleyournick', "uid IN({$del->delete_uids})");
+	if($del->delete_uids)
+		$GLOBALS['db']->delete_query('styleyournick', "uid IN({$del->delete_uids})");
 }
 
 /*
